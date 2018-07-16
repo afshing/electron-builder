@@ -5,6 +5,8 @@ import isEqual from "lodash.isequal"
 import { Logger, ResolvedUpdateFileInfo } from "./main"
 import { pathExists, readJson, emptyDir, outputJson } from "fs-extra-p"
 import * as path from "path"
+import { util } from 'util'
+
 
 /** @private **/
 export class DownloadedUpdateHelper {
@@ -29,6 +31,12 @@ export class DownloadedUpdateHelper {
     if (this.versionInfo != null && this.file === updateFile && this.fileInfo != null) {
       // update has already been downloaded from this running instance
       // check here only existence, not checksum
+      console.log('this.versionInfo', util.inspect(this.versionInfo))
+      console.log('versionInfo', util.inspect(versionInfo))
+      console.log('this.fileInfo', util.inspect(this.fileInfo))
+      console.log('fileInfo', util.inspect(fileInfo))
+      console.log('updateFile', util.inspect(updateFile))
+
       if (isEqual(this.versionInfo, versionInfo) && isEqual(this.fileInfo.info, fileInfo.info) && (await pathExists(updateFile))) {
         return updateFile
       }
